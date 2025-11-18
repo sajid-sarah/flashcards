@@ -21,8 +21,8 @@ function App() {
   };
 
   const handleGenerateFlashcards = async (note: string) => {
-    //const generatedFlashcards = await generateFlashcards(note);
-    const parsedFlashcardContent = parseFlashcards(exampleContent);
+    const generatedFlashcards = await generateFlashcards(note);
+    const parsedFlashcardContent = parseFlashcards(generatedFlashcards);
     setFlashcards(parsedFlashcardContent)
   }
 
