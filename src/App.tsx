@@ -12,6 +12,7 @@ function App() {
   const [notes, setNotes] = useState("");
   const [notesList, setNotesList] = useState<string[]>([]);
   const [flashcards, setFlashcards] = useState<Flashcard[]>([]);
+  const [loading, setLoading] = useState(false);
 
   const handleSubmitNote = () => {
     if (!notes.trim()) return;
@@ -21,9 +22,12 @@ function App() {
   };
 
   const handleGenerateFlashcards = async (note: string) => {
+    setLoading(true);
+    setFlashcards([]);
     const generatedFlashcards = await generateFlashcards(note);
     const parsedFlashcardContent = parseFlashcards(generatedFlashcards);
-    setFlashcards(parsedFlashcardContent)
+    setFlashcards(parsedFlashcardContent);
+    setLoading(false);
   }
 
   return (
@@ -34,7 +38,8 @@ function App() {
           <div className='left-container'><NotesList notes={notesList} onGenerate={handleGenerateFlashcards} /></div>
           <div className='middle-container'>
             <NotesInput value={notes} onChange={setNotes} onSubmit={handleSubmitNote} />
-            <FlashcardSwiper cards={flashcards} />
+            {loading && <div className="loader"></div>}
+            {!loading && flashcards && <FlashcardSwiper cards={flashcards} />}
           </div>
           <div className='right-container'></div>
         </div>
