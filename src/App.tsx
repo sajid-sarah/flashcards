@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import './App.css'
 import { generateFlashcards } from './api/flashcardApi'
-import { exampleContent } from './api/flashcardApi';
+//import { exampleContent } from './api/flashcardApi';
 import NotesList from './components/NotesList';
 import NotesInput from './components/NotesInput';
 import FlashcardSwiper from './components/FlashcardSwiper';
