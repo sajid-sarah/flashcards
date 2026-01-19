@@ -18,9 +18,8 @@ export default async function handler(req, res) {
     }
     
     const client = new OpenAI({
-        apiKey: process.env.OPENAI_API_KEY,
-        baseURL: "https://litellm.studysmarter-infra.de/v1",
-        dangerouslyAllowBrowser: true,
+        apiKey: process.env.GROQ_API_KEY,
+        baseURL: "https://api.groq.com/openai/v1",
         maxRetries: 0
     });
 
@@ -28,16 +27,17 @@ export default async function handler(req, res) {
 
     try {
         const response = await client.chat.completions.create({
-            model: "gpt-4.1-mini",
+            model: "llama-3.1-8b-instant",
             messages: [
                 { role: "system", content: FLASHCARD_ROLE_PROMPT },
                 { role: "user", content: prompt }
-            ]
+            ],
+            temperature: 0.4,
         });
         
         return res.status(200).json({ content: response.choices[0].message.content });
     } catch (err) {
         console.error(err);
-        return res.status(500).json({ error: "OpenAI request failed" });
+        return res.status(500).json({ error: "LLM request failed" });
     }
 }
