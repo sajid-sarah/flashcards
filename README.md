@@ -1,17 +1,60 @@
-## AI Generated Flashcards (Extended Version)
+# Flashcard Generator ✨
 
-[Timeboxed README](https://github.com/sajid-sarah/flashcards/blob/timeboxed/README.md)
+A simple flashcard generator that turns short notes into study-ready flashcards using a Large Language Model (LLM).
 
-I built upon the timeboxed version to include the remaining features.
-#### 1. Update NotesInput and add NotesList
-- Add submit button to save notes and show them in the NotesList.
-- Show icon button to generate flashcards for a note.
+Built with React + TypeScript (Vite), deployed on Vercel, powered by a free LLM (Groq).
 
-#### 2. Add Loader
-Show a spinning loader when generate frashcards button is clicked until the api response is received, then show the flashcard swiper.
+## Features
 
-#### 3. UI tweaks
-Transfer inline styles to separate css files, add minor styling updates.
+- Generate flashcards from plain text notes
+- Always returns exactly 3 flashcards
+- Structured JSON output (no fragile text parsing)
+- Clean, swipeable flashcard UI
+- Fast serverless backend
 
-#### 4. Deploy using vercel
-Login on vercel, set env variable, import github repository, deploy.
+## Getting Started
+
+### 1. Install dependencies
+`npm install`
+
+### 2. Set environment variables
+Create a .env.local file at the project root:
+
+GROQ_API_KEY=your_groq_api_key_here
+
+### 3. Run locally with Vercel
+`vercel dev`
+
+## Tech Stack
+
+Frontend: React, TypeScript, Vite
+
+Backend: Vercel Serverless Functions
+
+LLM Provider: Groq (OpenAI-compatible API)
+
+Deployment: Vercel
+
+## Notes
+
+- API keys are server-side only
+- No client-side parsing required
+- Easy to swap LLM providers later
+
+## API
+POST /api/flashcards
+
+```
+Request body
+{
+  "prompt": "Your study notes here"
+}
+
+Response
+{
+  "flashcards": [
+    { "question": "...", "answer": "..." },
+    { "question": "...", "answer": "..." },
+    { "question": "...", "answer": "..." }
+  ]
+}
