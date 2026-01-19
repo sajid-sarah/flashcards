@@ -1,11 +1,9 @@
 import { useState } from 'react';
 import './App.css'
 import { generateFlashcards } from './api/flashcardApi'
-//import { exampleContent } from './api/flashcardApi';
 import NotesList from './components/NotesList';
 import NotesInput from './components/NotesInput';
 import FlashcardSwiper from './components/FlashcardSwiper';
-import { parseFlashcards } from './utils/parseFlashcards';
 import type { Flashcard } from "./types/Flashcard";
 
 function App() {
@@ -16,7 +14,6 @@ function App() {
 
   const handleSubmitNote = () => {
     if (!notes.trim()) return;
-
     setNotesList((prev) => [...prev, notes]);
     setNotes("");
   };
@@ -24,10 +21,13 @@ function App() {
   const handleGenerateFlashcards = async (note: string) => {
     setLoading(true);
     setFlashcards([]);
-    const generatedFlashcards = await generateFlashcards(note);
-    const parsedFlashcardContent = parseFlashcards(generatedFlashcards);
-    setFlashcards(parsedFlashcardContent);
-    setLoading(false);
+
+    try {
+      const cards = await generateFlashcards(note);
+      setFlashcards(cards);
+    } finally {
+      setLoading(false);
+    }
   }
 
   return (
