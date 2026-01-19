@@ -1,5 +1,6 @@
 import React from "react";
 import type { Flashcard } from "../types/Flashcard";
+import '../components/styles/FlashcardComponent.css';
 
 interface FlashcardComponentProps {
     card: Flashcard;
@@ -7,10 +8,10 @@ interface FlashcardComponentProps {
 
 const FlashcardComponent: React.FC<FlashcardComponentProps> = ({ card }) => {
     return (
-        <div style={{ border: "1px solid #ccc", padding: "10px", marginBottom: "10px" }}>
-            <h3>Question:</h3>
+        <div className="flashcard-container">
+            <h4>Question</h4>
             <p>{card.question}</p>
-            <h3>Answer:</h3>
+            <h4>Answer</h4>
             <p>{card.answer}</p>
         </div>
     );

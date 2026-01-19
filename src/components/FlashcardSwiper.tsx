@@ -2,6 +2,7 @@ import React from "react";
 import { useState } from "react";
 import type { Flashcard  } from "../types/Flashcard";
 import FlashcardComponent from "./FlashcardComponent";
+import './styles/FlashcardSwiper.css';
 
 interface FlashcardSwiperProps {
     cards: Flashcard[];
@@ -22,8 +23,10 @@ const FlashcardSwiper: React.FC<FlashcardSwiperProps> = ({ cards }) => {
     return (
         <div>
             <FlashcardComponent card={cards[index]} />
-            <button onClick={handlePrev} disabled={cards.length <= 1}>Previous</button>
-            <button onClick={handleNext} disabled={cards.length <= 1}>Next</button>
+            <div className="flashcard-btn-container">
+                <button onClick={handlePrev} disabled={cards.length <= 1}>Previous</button>
+                <button onClick={handleNext} disabled={cards.length <= 1}>Next</button>
+            </div>
         </div>
     );
 }
