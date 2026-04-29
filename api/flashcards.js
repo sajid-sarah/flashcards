@@ -3,22 +3,20 @@ import OpenAI from "openai";
 const FLASHCARD_ROLE_PROMPT = `
 You are a flashcard generator.
 
-Return ONLY valid JSON.
-No markdown.
-No extra text.
+Generate exactly 3 flashcards from the user's notes.
 
-The response MUST be a JSON array of exactly 3 objects.
-
-Each object MUST have this shape:
+Respond with a JSON object in this shape:
 {
-  "question": string,
-  "answer": string
+  "flashcards": [
+    { "question": "...", "answer": "..." },
+    { "question": "...", "answer": "..." },
+    { "question": "...", "answer": "..." }
+  ]
 }
 
 Rules:
 - Questions should be concise.
 - Answers should be short and factual.
-- Do not include explanations outside the JSON.
 `;
 
 
@@ -42,7 +40,8 @@ export default async function handler(req, res) {
   try {
     const completion = await client.chat.completions.create({
       model: "llama-3.1-8b-instant",
-      temperature: 0.2,
+      temperature: 0.4,
+      response_format: { type: "json_object" },
       messages: [
         { role: "system", content: FLASHCARD_ROLE_PROMPT },
         { role: "user", content: prompt },
@@ -50,32 +49,16 @@ export default async function handler(req, res) {
     });
 
     const raw = completion.choices[0].message.content;
+    const { flashcards } = JSON.parse(raw);
 
-    // Hard fail if model misbehaves
-    let flashcards;
-    try {
-      flashcards = JSON.parse(raw);
-    } catch {
-      return res.status(500).json({
-        error: "Model returned invalid JSON",
-        raw,
-      });
-    }
-
-    // Validate shape
     if (
       !Array.isArray(flashcards) ||
       flashcards.length !== 3 ||
       !flashcards.every(
-        (c) =>
-          typeof c.question === "string" &&
-          typeof c.answer === "string"
+        (c) => typeof c.question === "string" && typeof c.answer === "string"
       )
     ) {
-      return res.status(500).json({
-        error: "Invalid flashcard format",
-        raw,
-      });
+      return res.status(500).json({ error: "Invalid flashcard format" });
     }
 
     return res.status(200).json({ flashcards });
