@@ -1,56 +1,45 @@
 # Flashcard Generator ✨
 
-A simple flashcard generator that turns short notes into study-ready flashcards using a Large Language Model (LLM).
+Paste your study notes, get 3 flashcards instantly. Powered by Groq.
 
-Built with React + TypeScript (Vite), deployed on Vercel, powered by a free LLM (Groq).
+**Live demo:** [https://flashcards-tau-pied.vercel.app/]
 
-## Features
+## Tech stack
 
-- Generate flashcards from plain text notes
-- Always returns exactly 3 flashcards
-- Structured JSON output (no fragile text parsing)
-- Clean, swipeable flashcard UI
-- Fast serverless backend
+- React + TypeScript (Vite)
+- Vercel Serverless Functions
+- Groq API (OpenAI-compatible)
 
-## Getting Started
+## Running locally
 
-### 1. Install dependencies
-`npm install`
+Requires the [Vercel CLI](https://vercel.com/docs/cli) — `npm run dev` will not serve the API.
 
-### 2. Set environment variables
-Create a .env.local file at the project root:
+```bash
+npm install
+vercel dev
+```
 
-GROQ_API_KEY=your_groq_api_key_here
+### Environment variables
 
-### 3. Run locally with Vercel
-`vercel dev`
-
-## Tech Stack
-
-Frontend: React, TypeScript, Vite
-
-Backend: Vercel Serverless Functions
-
-LLM Provider: Groq (OpenAI-compatible API)
-
-Deployment: Vercel
-
-## Notes
-
-- API keys are server-side only
-- No client-side parsing required
-- Easy to swap LLM providers later
-
-## API
-POST /api/flashcards
+Create a `.env.local` file at the project root:
 
 ```
-Request body
-{
-  "prompt": "Your study notes here"
-}
+GROQ_API_KEY=your_groq_api_key_here
+```
 
-Response
+Get a free API key at [console.groq.com](https://console.groq.com).
+
+## API
+
+`POST /api/flashcards`
+
+**Request**
+```json
+{ "prompt": "Your study notes here" }
+```
+
+**Response**
+```json
 {
   "flashcards": [
     { "question": "...", "answer": "..." },
@@ -58,3 +47,6 @@ Response
     { "question": "...", "answer": "..." }
   ]
 }
+```
+
+API keys are kept server-side only and never exposed to the client.
