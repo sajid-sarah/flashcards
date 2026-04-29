@@ -47,6 +47,12 @@
   }
 }
 
+.error-message {
+  color: #c0392b;
+  font-size: 14px;
+  margin: 16px 0;
+}
+
 .loader {
   border: 8px solid #f3f3f3;
   border-top: 8px solid #3498db;

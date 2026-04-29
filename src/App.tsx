@@ -11,6 +11,7 @@ function App() {
   const [notesList, setNotesList] = useState<string[]>([]);
   const [flashcards, setFlashcards] = useState<Flashcard[]>([]);
   const [loading, setLoading] = useState(false);
+  const [error, setError] = useState<string | null>(null);
 
   const handleSubmitNote = () => {
     if (!notes.trim()) return;
@@ -21,10 +22,13 @@ function App() {
   const handleGenerateFlashcards = async (note: string) => {
     setLoading(true);
     setFlashcards([]);
+    setError(null);
 
     try {
       const cards = await generateFlashcards(note);
       setFlashcards(cards);
+    } catch (err) {
+      setError(err instanceof Error ? err.message : "Something went wrong. Please try again.");
     } finally {
       setLoading(false);
     }
@@ -39,7 +43,8 @@ function App() {
           <div className='middle-container'>
             <NotesInput value={notes} onChange={setNotes} onSubmit={handleSubmitNote} />
             {loading && <div className="loader"></div>}
-            {!loading && flashcards && <FlashcardSwiper cards={flashcards} />}
+            {!loading && error && <p className="error-message">{error}</p>}
+            {!loading && !error && <FlashcardSwiper cards={flashcards} />}
           </div>
           <div className='right-container'></div>
         </div>
