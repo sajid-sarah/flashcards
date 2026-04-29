@@ -9,7 +9,7 @@ interface NotesInputProps {
 
 const NotesInput: React.FC<NotesInputProps> = ({ value, onChange, onSubmit }) => {
   return (
-    <div>
+    <div className="notes-input-container">
         <textarea className="note-input" value={value} onChange={(e) => onChange(e.target.value)} placeholder="Enter your notes here..."/>
         <button onClick={onSubmit}>Add Note</button>
     </div>

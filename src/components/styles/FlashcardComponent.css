@@ -2,5 +2,11 @@
     border: 1px solid rgb(118, 118, 118);
     margin: 10px 0px;
     padding: 10px;
+    min-height: 200px;
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    overflow-y: auto;
 }
 
