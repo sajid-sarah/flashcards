@@ -4,6 +4,23 @@
     align-items: center;
 }
 
+.note-input-footer {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 10px;
+}
+
+.char-counter {
+    font-size: 12px;
+    color: #888;
+}
+
+.char-counter--warning {
+    color: #c0392b;
+}
+
 .note-input {
     width: 100%;
     box-sizing: border-box;
