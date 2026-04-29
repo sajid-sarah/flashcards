@@ -27,4 +27,11 @@
     height: 120px;
     padding: 10px;
     margin-bottom: 10px;
+    outline: none;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+}
+
+.note-input:focus {
+    border-color: #888;
 }
